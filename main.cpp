@@ -15,9 +15,11 @@ private:
     const static char empty = '.';
     const static char vertical_line = '|';
     const static char horizontal_line = '-';
-    size_t size;
+
 
 public:
+    size_t size;
+
     explicit TicTacToe(size_t n = 0) {// DEFAULT ZERO NEEDED FOR CONSTRUCTOR GAME
         table_map.reserve(n);
         size = n;
@@ -122,10 +124,10 @@ public:
 
 class ai_player {
 private:
-    TicTacToe board;
 
     int
-    get_step_score(TicTacToe cur_board, std::tuple<int, int> coordinates, int player, int ai_player = DEFAULT_PLAYER,
+    get_step_score(TicTacToe cur_board, std::tuple<int, int> coordinates, int player, TicTacToe board,
+                   int ai_player = DEFAULT_PLAYER,
                    int current_score = 0) {
         if (ai_player == DEFAULT_PLAYER) {
             ai_player = player;
@@ -139,6 +141,7 @@ private:
 
         if (player == X_PLAYER) {
             cur_board.set_cross(std::get<0>(coordinates), std::get<1>(coordinates));
+
         } else {
             cur_board.set_zero(std::get<0>(coordinates), std::get<1>(coordinates));
         }
@@ -146,7 +149,7 @@ private:
         while (!cur_board.get_free().empty()) {
             std::vector<std::tuple<int, int>> free_coords = board.get_free();
             for (std::tuple<int, int> coords : free_coords) {
-                sum_of_subscores += get_step_score(cur_board, coords, -player, ai_player, current_score);
+                sum_of_subscores += get_step_score(cur_board, coords, -player, board, ai_player, current_score);
             }
 
         }
@@ -155,18 +158,16 @@ private:
     }
 
 public:
-    explicit ai_player(TicTacToe &current_board) {
-        board = current_board;
-    }
+
 
     ai_player() = default;
 
-    std::tuple<int, int> get_next_step_naive() {
-        auto next_steps = board.get_free();
+    std::tuple<int, int> get_next_step_naive(TicTacToe table) {
+        auto next_steps = table.get_free();
         return next_steps[0];
     }
 
-    std::tuple<int, int> get_next_step_tree_strategy(int player) {
+    std::tuple<int, int> get_next_step_tree_strategy(int player, TicTacToe board) {
         if (player != X_PLAYER && player != O_PLAYER) {
             throw std::invalid_argument("Player values should be -1 for o or 1 for x (X_PLAYER and O_PLAYER)");
         }
@@ -178,7 +179,7 @@ public:
         int current_best_score = -10;
 
         for (std::tuple<int, int> coordinates : free_coords) {
-            int current_score = get_step_score(this->board, coordinates, player);//Is it copy? Should be copy
+            int current_score = get_step_score(board, coordinates, player, board);//Is it copy? Should be copy
             if (current_score > current_best_score) {
                 current_best_score = current_score;
                 current_best_step = coordinates;
@@ -207,7 +208,7 @@ private:
             std::tuple<int, int> next_move;
             std::cout << table.get_string();
             if (rival == AI && num_moves % 2 != 0) {
-                next_move = ai.get_next_step_naive();
+                next_move = ai.get_next_step_naive(table);
             } else {
                 next_move = get_move(num_moves % 2 + 1);
             }
@@ -299,7 +300,7 @@ private:
                 if (option == 1 || option == 0) {
                     rival = option;
                     if (rival == AI) {
-                        ai = ai_player(table);
+                        ai = ai_player();
                     }
                     break;
                 }
@@ -311,37 +312,14 @@ private:
 
     }
 
-    TicTacToe set_size() {
-        int option;
-        while (true) {
-            std::cout << "We offer a n*n field game \n Please, enter size of n that you wish\n";
-            std::cin >> option;
-
-            if (std::cin.fail()) {
-                std::cin.clear();
-                std::cout << "Invalid input\n";
-            } else {
-                if (option > 0) {
-                    size = option;
-                    table = TicTacToe(size);
-                    break;
-                }
-                std::cin.clear();
-                std::cout << "Invalid input\n";
-
-            }
-        }
-        return table;
-    }
-
 public:
-    TicTacToe table;
-    int rival;
+    TicTacToe &table;
+    int rival{};
     int size;
 
-    Game() {
+    explicit Game(TicTacToe &current_table) : table(current_table) {
         std::cout << "Welcome to TIC-TAC-TOE game\n";
-        table = set_size();
+        size = current_table.size;
         set_rival();
     }
 
@@ -352,8 +330,33 @@ public:
 
 };
 
+TicTacToe set_size() {
+    int option;
+    TicTacToe table;
+    while (true) {
+        std::cout << "We offer a n*n field game \n Please, enter size of n that you wish\n";
+        std::cin >> option;
+
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cout << "Invalid input\n";
+        } else {
+            if (option > 0) {
+                //               size = option;
+                table = TicTacToe(option);
+                break;
+            }
+            std::cin.clear();
+            std::cout << "Invalid input\n";
+
+        }
+    }
+    return table;
+}
+
 int main() {
-    auto g = Game();
+    auto table = set_size();
+    auto g = Game(table);
     g.play();
     return 0;
 }

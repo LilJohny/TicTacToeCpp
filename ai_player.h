@@ -1,7 +1,7 @@
 #ifndef TICTACTOE_AI_PLAYERS_H
 
 #include <random>
-#include "tictactoe_board.h"
+#include "tic_tac_toe_board.h"
 #include <cstdlib>
 #include <ctime>
 

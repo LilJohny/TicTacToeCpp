@@ -3,7 +3,7 @@
 //
 
 #include <random>
-#include "tictactoe_board.h"
+#include "tic_tac_toe_board.h"
 
 #ifndef TICTACTOE_AI_PLAYER_NAIVE_H
 

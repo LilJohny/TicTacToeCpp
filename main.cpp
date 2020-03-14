@@ -3,7 +3,7 @@
 #include <tuple>
 #include <algorithm>
 #include "ai_player.h"
-#include "tictactoe_board.h"
+#include "tic_tac_toe_board.h"
 #include "ai_player_random.h"
 
 class Game {

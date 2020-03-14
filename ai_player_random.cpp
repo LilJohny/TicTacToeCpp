@@ -4,7 +4,7 @@
 
 #include <tuple>
 #include "ai_player_random.h"
-#include "tictactoe_board.h"
+#include "tic_tac_toe_board.h"
 
 std::random_device   ai_player_random::m_rd;
 std::mt19937 ai_player_random::m_rng(ai_player_random::m_rd());

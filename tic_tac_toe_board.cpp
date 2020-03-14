@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 #include <tuple>
-#include "tictactoe_board.h"
+#include "tic_tac_toe_board.h"
 
 
 TicTacToeBoard::TicTacToeBoard(size_t n) {

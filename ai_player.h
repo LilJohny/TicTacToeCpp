@@ -1,7 +1,9 @@
 #ifndef TICTACTOE_AI_PLAYERS_H
 
+#include <random>
 #include "tictactoe_board.h"
-
+#include <cstdlib>
+#include <ctime>
 
 class ai_player {
 private:
@@ -11,8 +13,6 @@ private:
 
 public:
     ai_player();
-
-    static std::tuple<int, int> get_next_step_naive(TicTacToeBoard table);
 
     std::tuple<int, int> get_next_step_tree_strategy(int player, TicTacToeBoard board);
 

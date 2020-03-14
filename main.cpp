@@ -2,8 +2,9 @@
 #include <vector>
 #include <tuple>
 #include <algorithm>
-#include "ai_players.h"
+#include "ai_player.h"
 #include "tictactoe_board.h"
+#include "ai_player_random.h"
 
 class Game {
 private:
@@ -106,7 +107,7 @@ public:
             std::tuple<int, int> next_move;
             std::cout << table.get_repr_string();
             if (rival == AI && num_moves % 2 != 0) {
-                next_move = ai_player::get_next_step_naive(table);
+                next_move = ai_player_random::get_next_step_naive(table);
             } else {
                 next_move = get_move(num_moves % 2 + 1);
             }

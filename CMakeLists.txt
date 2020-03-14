@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(TicTacToe
         CMakeLists.txt
-        main.cpp)
+        main.cpp TicTacToe.h ai_players.cpp ai_players.h tictactoe_board.cpp)

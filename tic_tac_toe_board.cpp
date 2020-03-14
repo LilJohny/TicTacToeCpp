@@ -105,5 +105,16 @@ std::vector<std::tuple<int, int>> TicTacToeBoard::get_free() {
     return free;
 }
 
+bool TicTacToeBoard::coordinate_in_range(int coordinate) {
+    return coordinate >= 0 && coordinate < size;
+}
+
+bool TicTacToeBoard::coordinates_in_range(std::tuple<int, int> coordinates) {
+    int first_coordinate = std::get<0>(coordinates);
+    int second_coordinate = std::get<1>(coordinates);
+    return coordinate_in_range(first_coordinate) && coordinate_in_range(second_coordinate);
+}
+
+
 
 

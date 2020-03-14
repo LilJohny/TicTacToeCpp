@@ -13,6 +13,7 @@ private:
     const static char empty = '.';
     const static char vertical_line = '|';
     const static char horizontal_line = '-';
+    bool coordinate_in_range(int coordinate);
 public:
     size_t size;
 
@@ -27,6 +28,8 @@ public:
     void set_zero(int i, int j);
 
     std::vector<std::tuple<int, int>> get_free();
+
+    bool coordinates_in_range(std::tuple<int, int> coordinates);
 };
 
 #define TICTACTOE_TICTACTOE_H

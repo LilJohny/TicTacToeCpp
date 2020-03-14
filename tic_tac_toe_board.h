@@ -1,7 +1,6 @@
 #ifndef TICTACTOE_TICTACTOE_H
 #define X_PLAYER 1
 #define O_PLAYER -1
-#define DEFAULT_PLAYER -2
 #define AI 0
 #define PERSON 1
 

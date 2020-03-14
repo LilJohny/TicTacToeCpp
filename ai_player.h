@@ -1,7 +1,3 @@
-//
-// Created by denis on 14.03.20.
-//
-
 #ifndef TICTACTOE_AI_PLAYER_H
 #define TICTACTOE_AI_PLAYER_H
 

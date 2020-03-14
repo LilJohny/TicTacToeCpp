@@ -1,7 +1,3 @@
-//
-// Created by denis on 14.03.20.
-//
-
 #include <tuple>
 #include "ai_player_random.h"
 #include "tic_tac_toe_board.h"

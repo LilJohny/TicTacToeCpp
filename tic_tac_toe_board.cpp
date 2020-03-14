@@ -11,7 +11,12 @@ TicTacToeBoard::TicTacToeBoard(size_t n) {
         table_map.emplace_back(n, 0);
     }
 }
-
+TicTacToeBoard::TicTacToeBoard(TicTacToeBoard const &board){
+    auto table_map_old = board.table_map;
+    auto table_map_new(table_map_old);
+    table_map = table_map_new;
+    size = board.size;
+};
 std::string TicTacToeBoard::get_repr_string() {
     std::string representation;
     representation.append("\n");

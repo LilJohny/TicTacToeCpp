@@ -1,6 +1,6 @@
 #ifndef TICTACTOE_AI_PLAYERS_H
 
-#include "TicTacToe.h"
+#include "tictactoe_board.h"
 
 
 class ai_player {

@@ -44,11 +44,11 @@ std::tuple<int, int> ai_player::get_next_step_naive(TicTacToeBoard table) {
 
 std::tuple<int, int> ai_player::get_next_step_tree_strategy(int player, TicTacToeBoard board) {
     if (player != X_PLAYER && player != O_PLAYER) {
-        throw std::invalid_argument("Player values should be -1 for o or 1 for x (X_PLAYER and O_PLAYER)");
+        throw std::runtime_error("Player values should be -1 for o or 1 for x (X_PLAYER and O_PLAYER)");
     }
     std::vector<std::tuple<int, int>> free_coords = board.get_free();
     if (free_coords.empty()) {
-        throw std::invalid_argument("Game is over. No free coordinates");
+        throw std::runtime_error("Game is over. No free coordinates");
     }
     std::tuple<int, int> current_best_step = free_coords[0];
     int current_best_score = -10;

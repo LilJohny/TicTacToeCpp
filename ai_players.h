@@ -12,7 +12,7 @@ private:
 public:
     ai_player();
 
-    std::tuple<int, int> get_next_step_naive(TicTacToeBoard table);
+    static std::tuple<int, int> get_next_step_naive(TicTacToeBoard table);
 
     std::tuple<int, int> get_next_step_tree_strategy(int player, TicTacToeBoard board);
 

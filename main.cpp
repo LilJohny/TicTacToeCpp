@@ -7,8 +7,6 @@
 
 class Game {
 private:
-    ai_player ai;
-
     std::tuple<int, int> get_move(int player) {
         while (true) {
             std::cout << "Player " << player << " please, enter coordinates of your step \n";
@@ -75,9 +73,6 @@ private:
             } else {
                 if (option == 1 || option == 0) {
                     rival = option;
-                    if (rival == AI) {
-                        ai = ai_player();
-                    }
                     break;
                 }
                 std::cin.clear();
@@ -111,7 +106,7 @@ public:
             std::tuple<int, int> next_move;
             std::cout << table.get_repr_string();
             if (rival == AI && num_moves % 2 != 0) {
-                next_move = ai.get_next_step_naive(table);
+                next_move = ai_player::get_next_step_naive(table);
             } else {
                 next_move = get_move(num_moves % 2 + 1);
             }

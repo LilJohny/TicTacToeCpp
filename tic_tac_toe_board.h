@@ -5,6 +5,7 @@
 #define PERSON 1
 
 #include <vector>
+#include <string>
 
 class TicTacToeBoard {
 private:
@@ -21,7 +22,9 @@ public:
     size_t size;
 
     explicit TicTacToeBoard(size_t n = 0);
+
     TicTacToeBoard(TicTacToeBoard const &board);
+
     std::string get_repr_string();
 
     int check_endgame();

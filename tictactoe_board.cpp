@@ -106,4 +106,4 @@ std::vector<std::tuple<int, int>> TicTacToeBoard::get_free() {
 }
 
 
-};
+

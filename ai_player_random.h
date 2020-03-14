@@ -13,7 +13,7 @@ class ai_player_random {
     static std::random_device m_rd;
     static std::mt19937 m_rng;
 public:
-    static std::tuple<int, int> get_next_step_naive(std::tuple<int, TicTacToeBoard> state);
+    static std::tuple<int, int> get_next_step(std::tuple<int, TicTacToeBoard> state);
 };
 
 #define TICTACTOE_AI_PLAYER_NAIVE_H

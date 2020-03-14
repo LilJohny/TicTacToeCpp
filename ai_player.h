@@ -14,7 +14,7 @@ private:
 public:
     ai_player();
 
-    std::tuple<int, int> get_next_step_tree_strategy(int player, TicTacToeBoard board);
+    std::tuple<int, int> get_next_step_tree_strategy(std::tuple<int, TicTacToeBoard> state);
 
 };
 

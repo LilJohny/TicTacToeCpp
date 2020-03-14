@@ -136,7 +136,7 @@ public:
 
 };
 
-TicTacToeBoard set_size() {
+TicTacToeBoard create_table() {
     int option;
     TicTacToeBoard table;
     while (true) {
@@ -148,7 +148,6 @@ TicTacToeBoard set_size() {
             std::cout << "Invalid input\n";
         } else {
             if (option > 0) {
-                //               size = option;
                 table = TicTacToeBoard(option);
                 break;
             }
@@ -161,7 +160,7 @@ TicTacToeBoard set_size() {
 }
 
 int main() {
-    auto table = set_size();
+    auto table = create_table();
     auto g = Game(table);
     g.play();
     return 0;

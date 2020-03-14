@@ -107,7 +107,8 @@ public:
             std::tuple<int, int> next_move;
             std::cout << table.get_repr_string();
             if (rival == AI && num_moves % 2 != 0) {
-                next_move = ai_player_random::get_next_step(table);
+                std::tuple<int,TicTacToeBoard> state{2,table};
+                next_move = ai_player_random::get_next_step(state);
             } else {
                 next_move = get_move(num_moves % 2 + 1);
             }

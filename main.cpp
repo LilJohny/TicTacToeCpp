@@ -101,7 +101,7 @@ public:
         std::cout << "Let's start" << std::endl;
         std::cout << "Player 1 will play for X" << std::endl << " Player 2 will play for 0";
         int num_moves = 0;
-        while (!table.get_free().empty()) {//ENDGAME ???????????????????/ check is invalid for draw ???
+        while (!table.get_free().empty()) {
             if (table.check_endgame() != 0)
                 break;
             std::tuple<int, int> next_move;

@@ -9,44 +9,6 @@ class Game {
 private:
     ai_player ai;
 
-
-
-    void personalized_play() {
-
-        std::cout << "Let's start\n";
-        std::cout << "Player 1 will play for X\n Player 2 will play for 0";
-        int num_moves = 0;
-        while (!table.get_free().empty()) {//ENDGAME ???????????????????/ check is invalid for draw ???
-            if (table.check_endgame() != 0)
-                break;
-            std::tuple<int, int> next_move;
-            std::cout << table.get_repr_string();
-            if (rival == AI && num_moves % 2 != 0) {
-                next_move = ai.get_next_step_naive(table);
-            } else {
-                next_move = get_move(num_moves % 2 + 1);
-            }
-            if (num_moves % 2 == 0) {
-                table.set_cross(std::get<0>(next_move), std::get<1>(next_move));
-            } else {
-                table.set_zero(std::get<0>(next_move), std::get<1>(next_move));
-            }
-            num_moves++;
-        }
-        std::cout << table.get_repr_string();
-        std::cout << "GAME OVER. THE WINNER IS: \n";
-        int winner = table.check_endgame();
-        if (winner == X_PLAYER) {
-            std::cout << "PLAYER 1 (X)";
-        } else if (winner == O_PLAYER) {
-            std::cout << "PLAYER 2 (0)";
-        } else {
-            std::cout << "DRAW";
-        }
-
-
-    }
-
     std::tuple<int, int> get_move(int player) {
         while (true) {
             std::cout << "Player " << player << " please, enter coordinates of your step \n";
@@ -139,7 +101,37 @@ public:
 
 
     void play() {
-        personalized_play();
+
+        std::cout << "Let's start\n";
+        std::cout << "Player 1 will play for X\n Player 2 will play for 0";
+        int num_moves = 0;
+        while (!table.get_free().empty()) {//ENDGAME ???????????????????/ check is invalid for draw ???
+            if (table.check_endgame() != 0)
+                break;
+            std::tuple<int, int> next_move;
+            std::cout << table.get_repr_string();
+            if (rival == AI && num_moves % 2 != 0) {
+                next_move = ai.get_next_step_naive(table);
+            } else {
+                next_move = get_move(num_moves % 2 + 1);
+            }
+            if (num_moves % 2 == 0) {
+                table.set_cross(std::get<0>(next_move), std::get<1>(next_move));
+            } else {
+                table.set_zero(std::get<0>(next_move), std::get<1>(next_move));
+            }
+            num_moves++;
+        }
+        std::cout << table.get_repr_string();
+        std::cout << "GAME OVER. THE WINNER IS: \n";
+        int winner = table.check_endgame();
+        if (winner == X_PLAYER) {
+            std::cout << "PLAYER 1 (X)";
+        } else if (winner == O_PLAYER) {
+            std::cout << "PLAYER 2 (0)";
+        } else {
+            std::cout << "DRAW";
+        }
     }
 
 };

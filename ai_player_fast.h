@@ -7,7 +7,7 @@
 
 class ai_player_fast {
 private:
-    static int get_steps_to_win(TicTacToeBoard cur_board, std::tuple<int, int> coordinates, int player);
+    static int get_steps_to_win(TicTacToeBoard current_board, int player);
 
 public:
     ai_player_fast();

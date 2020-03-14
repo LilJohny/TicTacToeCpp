@@ -4,15 +4,15 @@
 #include <algorithm>
 #include <functional>
 #include <map>
-#include "ai_player_tree.h"
 #include "tic_tac_toe_board.h"
 #include "ai_player_random.h"
+#include "ai_player_fast.h"
 
 class Game {
 private:
     std::map<int, std::function<std::tuple<int, int>(
             std::tuple<int, TicTacToeBoard>)>> ai_map{{0, ai_player_random::get_next_step},
-                                                      {1, ai_player_tree::get_next_step}};
+                                                      {1, ai_player_fast::get_next_step}};
     std::function<std::tuple<int, int>(std::tuple<int, TicTacToeBoard>)> ai_next_step;
 
     std::tuple<int, int> get_move(int player) {
@@ -67,26 +67,6 @@ private:
 
     }
 
-    static int get_int(const std::vector<int> &options) {
-        std::string option;
-        int option_int = 2;
-        while (std::count(options.begin(), options.end(), option_int) == 0) {
-            std::cin >> option;
-            if (std::cin.fail()) {
-                std::cin.clear();
-                std::cout << "Invalid input" << std::endl;
-            } else {
-                option.erase(std::remove(option.begin(), option.end(), '\n'), option.end());
-                try {
-                    option_int = std::stoi(option);
-                }
-                catch (std::exception &ex) {
-                    std::cout << "You typed not integer value. Try again" << std::endl;
-                }
-            }
-        }
-        return option_int;
-    }
 
     void set_rival() {
         int option;
@@ -114,6 +94,26 @@ public:
         set_rival();
     }
 
+    static int get_int(const std::vector<int> &options) {
+        std::string option;
+        int option_int = -1;
+        while (std::count(options.begin(), options.end(), option_int) == 0) {
+            std::cin >> option;
+            if (std::cin.fail()) {
+                std::cin.clear();
+                std::cout << "Invalid input" << std::endl;
+            } else {
+                option.erase(std::remove(option.begin(), option.end(), '\n'), option.end());
+                try {
+                    option_int = std::stoi(option);
+                }
+                catch (std::exception &ex) {
+                    std::cout << "You typed not integer value. Try again" << std::endl;
+                }
+            }
+        }
+        return option_int;
+    }
 
     void play() {
 
@@ -155,23 +155,11 @@ public:
 TicTacToeBoard create_table() {
     int option;
     TicTacToeBoard table;
-    while (true) {
-        std::cout << "We offer a n*n field game " << std::endl << "Please, enter size of n that you wish" << std::endl;
-        std::cin >> option;
 
-        if (std::cin.fail()) {
-            std::cin.clear();
-            std::cout << "Invalid input" << std::endl;
-        } else {
-            if (option > 0) {
-                table = TicTacToeBoard(option);
-                break;
-            }
-            std::cin.clear();
-            std::cout << "Invalid input" << std::endl;
-
-        }
-    }
+    std::cout << "We offer a n*n field game " << std::endl << "Please, enter size of n that you wish" << std::endl;
+    std::vector<int> options{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    option = Game::get_int(options);
+    table = TicTacToeBoard(option);
     return table;
 }
 

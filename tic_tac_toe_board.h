@@ -5,6 +5,8 @@
 #define AI 0
 #define PERSON 1
 
+#include <vector>
+
 class TicTacToeBoard {
 private:
     std::vector<std::vector<int >> table_map;
@@ -13,7 +15,9 @@ private:
     const static char empty = '.';
     const static char vertical_line = '|';
     const static char horizontal_line = '-';
+
     bool coordinate_in_range(int coordinate);
+
 public:
     size_t size;
 

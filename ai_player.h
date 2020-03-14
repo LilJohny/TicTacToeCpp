@@ -1,22 +1,18 @@
-#ifndef TICTACTOE_AI_PLAYERS_H
+//
+// Created by denis on 14.03.20.
+//
 
-#include <random>
+#ifndef TICTACTOE_AI_PLAYER_H
+#define TICTACTOE_AI_PLAYER_H
+
+
+#include <tuple>
 #include "tic_tac_toe_board.h"
-#include <cstdlib>
-#include <ctime>
 
 class ai_player {
-private:
-    static int get_step_score(TicTacToeBoard cur_board, std::tuple<int, int> coordinates, int player,
-                              int ai_player = DEFAULT_PLAYER, int current_score = 0);
-
 public:
-    ai_player();
-
     static std::tuple<int, int> get_next_step(std::tuple<int, TicTacToeBoard> state);
-
 };
 
-#define TICTACTOE_AI_PLAYERS_H
 
-#endif //TICTACTOE_AI_PLAYERS_H
+#endif //TICTACTOE_AI_PLAYER_H

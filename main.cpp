@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <functional>
 #include <map>
-#include "ai_player.h"
+#include "ai_player_tree.h"
 #include "tic_tac_toe_board.h"
 #include "ai_player_random.h"
 
@@ -12,7 +12,7 @@ class Game {
 private:
     std::map<int, std::function<std::tuple<int, int>(
             std::tuple<int, TicTacToeBoard>)>> ai_map{{0, ai_player_random::get_next_step},
-                                                      {1, ai_player::get_next_step}};
+                                                      {1, ai_player_tree::get_next_step}};
     std::function<std::tuple<int, int>(std::tuple<int, TicTacToeBoard>)> ai_next_step;
 
     std::tuple<int, int> get_move(int player) {
@@ -71,7 +71,7 @@ private:
         std::string option;
         int option_int = 2;
         while (std::count(options.begin(), options.end(), option_int) == 0) {
-            std::getline(std::cin, option);
+            std::cin >> option;
             if (std::cin.fail()) {
                 std::cin.clear();
                 std::cout << "Invalid input" << std::endl;

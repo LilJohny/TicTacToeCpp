@@ -37,7 +37,7 @@ ai_player::get_step_score(TicTacToeBoard cur_board, std::tuple<int, int> coordin
 
 ai_player::ai_player() = default;
 
-std::tuple<int, int> ai_player::get_next_step_tree_strategy(std::tuple<int,TicTacToeBoard> state) {
+std::tuple<int, int> ai_player::get_next_step(std::tuple<int,TicTacToeBoard> state) {
     int player = std::get<0>(state);
     auto board =std::get<1>(state);
     if (player != X_PLAYER && player != O_PLAYER) {

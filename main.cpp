@@ -2,12 +2,19 @@
 #include <vector>
 #include <tuple>
 #include <algorithm>
+#include <functional>
+#include <map>
 #include "ai_player.h"
 #include "tic_tac_toe_board.h"
 #include "ai_player_random.h"
 
 class Game {
 private:
+    std::map<int, std::function<std::tuple<int, int>(
+            std::tuple<int, TicTacToeBoard>)>> ai_map{{0, ai_player_random::get_next_step},
+                                                      {1, ai_player::get_next_step}};
+    std::function<std::tuple<int, int>(std::tuple<int, TicTacToeBoard>)> ai_next_step;
+
     std::tuple<int, int> get_move(int player) {
         while (true) {
             std::cout << "Player " << player << " please, enter coordinates of your step " << std::endl;
@@ -60,28 +67,40 @@ private:
 
     }
 
-
-    void set_rival() {
-        int option;
-        while (true) {
-            std::cout << "If you wish to play against AI enter 0" << std::endl
-                      << " If you wish to play against a friend enter 1" << std::endl;
-            std::cin >> option;
-
+    static int get_int(const std::vector<int> &options) {
+        std::string option;
+        int option_int = 2;
+        while (std::count(options.begin(), options.end(), option_int) == 0) {
+            std::getline(std::cin, option);
             if (std::cin.fail()) {
                 std::cin.clear();
                 std::cout << "Invalid input" << std::endl;
             } else {
-                if (option == 1 || option == 0) {
-                    rival = option;
-                    break;
+                option.erase(std::remove(option.begin(), option.end(), '\n'), option.end());
+                try {
+                    option_int = std::stoi(option);
                 }
-                std::cin.clear();
-                std::cout << "Invalid input" << std::endl;
-
+                catch (std::exception ex) {
+                    std::cout << "You typed not integer value. Try again" << std::endl;
+                }
             }
         }
+        return option_int;
+    }
 
+    void set_rival() {
+        int option;
+        std::cout << "If you wish to play against AI enter 0" << std::endl
+                  << " If you wish to play against a friend enter 1" << std::endl;
+        std::vector<int> options{AI, PERSON};
+        option = get_int(options);
+        rival = option;
+        if (rival == AI) {
+            std::cout << "Choose AI type:" << std::endl << "Type 0 to choose random AI" << std::endl
+                      << "Type 1 to choose tree-strategy AI" << std::endl;
+            int ai_type = get_int(options);
+            ai_next_step = ai_map[ai_type];
+        }
     }
 
 public:
@@ -107,8 +126,8 @@ public:
             std::tuple<int, int> next_move;
             std::cout << table.get_repr_string();
             if (rival == AI && num_moves % 2 != 0) {
-                std::tuple<int,TicTacToeBoard> state{2,table};
-                next_move = ai_player_random::get_next_step(state);
+                std::tuple<int, TicTacToeBoard> state{2, table};
+                next_move = ai_next_step(state);
             } else {
                 next_move = get_move(num_moves % 2 + 1);
             }

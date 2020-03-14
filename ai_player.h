@@ -7,14 +7,14 @@
 
 class ai_player {
 private:
-    int get_step_score(TicTacToeBoard cur_board, std::tuple<int, int> coordinates, int player, TicTacToeBoard board,
+    static int get_step_score(TicTacToeBoard cur_board, std::tuple<int, int> coordinates, int player, TicTacToeBoard board,
                        int ai_player = DEFAULT_PLAYER,
                        int current_score = 0);
 
 public:
     ai_player();
 
-    std::tuple<int, int> get_next_step_tree_strategy(std::tuple<int, TicTacToeBoard> state);
+    static std::tuple<int, int> get_next_step(std::tuple<int, TicTacToeBoard> state);
 
 };
 

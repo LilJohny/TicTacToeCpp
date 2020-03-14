@@ -2,10 +2,11 @@
 
 #include <random>
 #include "tic_tac_toe_board.h"
+#include "ai_player.h"
 #include <cstdlib>
 #include <ctime>
 
-class ai_player_fast {
+class ai_player_fast:ai_player {
 private:
     static int get_steps_to_win(TicTacToeBoard current_board, int player);
 

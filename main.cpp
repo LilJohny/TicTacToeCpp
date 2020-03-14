@@ -16,55 +16,29 @@ private:
     std::function<std::tuple<int, int>(std::tuple<int, TicTacToeBoard>)> ai_next_step;
 
     std::tuple<int, int> get_move(int player) {
-        while (true) {
-            std::cout << "Player " << player << " please, enter coordinates of your step " << std::endl;
+        std::cout << "Player " << player << " please, enter coordinates of your step " << std::endl;
 
-            int x, y;
-            while (true) {
-                std::cout << "Please, enter x coordinate of your step (row)" << std::endl;
-                std::cin >> x;
-                x--;
-                if (std::cin.fail()) {
-                    std::cin.clear();
-                    std::cout << "Invalid input" << std::endl;
-                } else {
-                    if (x > size || x < 0) {
-                        std::cin.clear();
-                        std::cout << "Invalid input" << std::endl;
-                    }
-                    break;
-
-                }
-            }
-
-            while (true) {
-                std::cout << "Please, enter y coordinate of your step (column)" << std::endl;
-                std::cin >> y;
-                y--;
-                if (std::cin.fail()) {
-                    std::cin.clear();
-                    std::cout << "Invalid input" << std::endl;
-                } else {
-                    if (y > size || y < 0) {
-                        std::cin.clear();
-                        std::cout << "Invalid input" << std::endl;
-                    }
-                    break;
-                }
-            }
-
-
-            std::tuple<int, int> c{x, y};
-            std::vector<std::tuple<int, int>> free_coords = table.get_free();
-            if (std::count(free_coords.begin(), free_coords.end(), c) > 0) {
-                return c;
-            } else if (!table.coordinates_in_range(c)) {
-                std::cout << "Coordinates out of range" << std::endl;
-            } else {
+        int x, y;
+        std::vector<int> options;
+        options.reserve(size);
+        for (int i = 1; i <= size; ++i) {
+            options.push_back(i);
+        }
+        std::tuple<int, int> coord{-1, -1};
+        std::vector<std::tuple<int, int>> free_coords = table.get_free();
+        while (std::count(free_coords.begin(), free_coords.end(), coord) <= 0) {
+            std::cout << "Please, enter x coordinate of your step (row)" << std::endl;
+            x = Game::get_int(options);
+            x--;
+            std::cout << "Please, enter y coordinate of your step (column)" << std::endl;
+            y = Game::get_int(options);
+            y--;
+            coord = {x, y};
+            if (std::count(free_coords.begin(), free_coords.end(), coord) <= 0 && table.coordinates_in_range(coord)) {
                 std::cout << "Coordinates is used already" << std::endl;
             }
         }
-
+        return coord;
     }
 
 
@@ -97,7 +71,9 @@ public:
     static int get_int(const std::vector<int> &options) {
         std::string option;
         int option_int = -1;
+        bool exception = false;
         while (std::count(options.begin(), options.end(), option_int) == 0) {
+            exception = false;
             std::cin >> option;
             if (std::cin.fail()) {
                 std::cin.clear();
@@ -108,8 +84,12 @@ public:
                     option_int = std::stoi(option);
                 }
                 catch (std::exception &ex) {
+                    exception = true;
                     std::cout << "You typed not integer value. Try again" << std::endl;
                 }
+            }
+            if (std::count(options.begin(), options.end(), option_int) == 0 && !exception) {
+                std::cout << "Your input is inappropriate in current context" << std::endl;
             }
         }
         return option_int;
@@ -120,9 +100,7 @@ public:
         std::cout << "Let's start" << std::endl;
         std::cout << "Player 1 will play for X" << std::endl << " Player 2 will play for 0";
         int num_moves = 0;
-        while (!table.get_free().empty()) {
-            if (table.check_endgame() != 0)
-                break;
+        while (!table.get_free().empty() && table.check_endgame() == 0) {
             std::tuple<int, int> next_move;
             std::cout << table.get_repr_string();
             if (rival == AI && num_moves % 2 != 0) {

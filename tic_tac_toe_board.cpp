@@ -52,8 +52,8 @@ int TicTacToeBoard::check_endgame() {
     std::vector<int> sub_diagonal;
     main_diagonal.reserve(size);
     sub_diagonal.reserve(size);
-    int j = size - 1;
-    for (int i = 0; i < size; ++i) {
+    size_t j = size - 1;
+    for (size_t i = 0; i < size; ++i) {
         main_diagonal.push_back(table_map[i][i]);
         sub_diagonal.push_back(table_map[j][i]);
         j--;
@@ -76,7 +76,7 @@ int TicTacToeBoard::check_endgame() {
         }
     }
     return 0;
-};
+}
 
 void TicTacToeBoard::set_cross(int i, int j) {
     if (i >= 0 && i < size && j >= 0 && j < size) {

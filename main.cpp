@@ -80,7 +80,7 @@ private:
                 try {
                     option_int = std::stoi(option);
                 }
-                catch (std::exception ex) {
+                catch (std::exception &ex) {
                     std::cout << "You typed not integer value. Try again" << std::endl;
                 }
             }

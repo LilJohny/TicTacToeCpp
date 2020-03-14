@@ -7,7 +7,7 @@
 #define O_PLAYER -1
 #define DEFAULT_PLAYER -2
 
-class TicTacToe {
+class TicTacToeBoard {
 private:
     std::vector<std::vector<int >> table_map;
     const static char cross = 'x';
@@ -20,7 +20,7 @@ private:
 public:
     size_t size;
 
-    explicit TicTacToe(size_t n = 0) {// DEFAULT ZERO NEEDED FOR CONSTRUCTOR GAME
+    explicit TicTacToeBoard(size_t n = 0) {
         table_map.reserve(n);
         size = n;
         for (int i = 0; i < n; ++i) {
@@ -126,7 +126,7 @@ class ai_player {
 private:
 
     int
-    get_step_score(TicTacToe cur_board, std::tuple<int, int> coordinates, int player, TicTacToe board,
+    get_step_score(TicTacToeBoard cur_board, std::tuple<int, int> coordinates, int player, TicTacToeBoard board,
                    int ai_player = DEFAULT_PLAYER,
                    int current_score = 0) {
         if (ai_player == DEFAULT_PLAYER) {
@@ -162,12 +162,12 @@ public:
 
     ai_player() = default;
 
-    std::tuple<int, int> get_next_step_naive(TicTacToe table) {
+    std::tuple<int, int> get_next_step_naive(TicTacToeBoard table) {
         auto next_steps = table.get_free();
         return next_steps[0];
     }
 
-    std::tuple<int, int> get_next_step_tree_strategy(int player, TicTacToe board) {
+    std::tuple<int, int> get_next_step_tree_strategy(int player, TicTacToeBoard board) {
         if (player != X_PLAYER && player != O_PLAYER) {
             throw std::invalid_argument("Player values should be -1 for o or 1 for x (X_PLAYER and O_PLAYER)");
         }
@@ -313,11 +313,11 @@ private:
     }
 
 public:
-    TicTacToe &table;
+    TicTacToeBoard &table;
     int rival{};
     int size;
 
-    explicit Game(TicTacToe &current_table) : table(current_table) {
+    explicit Game(TicTacToeBoard &current_table) : table(current_table) {
         std::cout << "Welcome to TIC-TAC-TOE game\n";
         size = current_table.size;
         set_rival();
@@ -330,9 +330,9 @@ public:
 
 };
 
-TicTacToe set_size() {
+TicTacToeBoard set_size() {
     int option;
-    TicTacToe table;
+    TicTacToeBoard table;
     while (true) {
         std::cout << "We offer a n*n field game \n Please, enter size of n that you wish\n";
         std::cin >> option;
@@ -343,7 +343,7 @@ TicTacToe set_size() {
         } else {
             if (option > 0) {
                 //               size = option;
-                table = TicTacToe(option);
+                table = TicTacToeBoard(option);
                 break;
             }
             std::cin.clear();

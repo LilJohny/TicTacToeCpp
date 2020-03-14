@@ -126,7 +126,7 @@ public:
             std::tuple<int, int> next_move;
             std::cout << table.get_repr_string();
             if (rival == AI && num_moves % 2 != 0) {
-                std::tuple<int, TicTacToeBoard> state{2, table};
+                std::tuple<int, TicTacToeBoard> state{O_PLAYER, table};
                 next_move = ai_next_step(state);
             } else {
                 next_move = get_move(num_moves % 2 + 1);

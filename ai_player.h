@@ -7,9 +7,8 @@
 
 class ai_player {
 private:
-    static int get_step_score(TicTacToeBoard cur_board, std::tuple<int, int> coordinates, int player, TicTacToeBoard board,
-                       int ai_player = DEFAULT_PLAYER,
-                       int current_score = 0);
+    static int get_step_score(TicTacToeBoard cur_board, std::tuple<int, int> coordinates, int player,
+                              int ai_player = DEFAULT_PLAYER, int current_score = 0);
 
 public:
     ai_player();
